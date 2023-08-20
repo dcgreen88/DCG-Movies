@@ -1,0 +1,329 @@
+body {
+  margin: 0;
+  background-color: rgb(29, 29, 29);
+}
+
+.modalbackground {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: 100;
+  background-color: rgba(105, 105, 105, 0.75);
+}
+.modalbackground.visible {
+  display: block;
+}
+
+.modalcontainer {
+  display: none;
+  position: fixed;
+  z-index: 101;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.modalcontainer.visible {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  padding: 20px;
+  /* border: solid 1px black; */
+  border-radius: 10px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  background-color: rgb(5, 136, 55);
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+input {
+  border: solid 1px rgb(41, 43, 44);
+  background-color: black;
+  color: white;
+  padding: 4px;
+  box-shadow: inset -1px -1px 4px rgba(255,255,255, 1);
+  margin-bottom: 2px;
+}
+
+label {
+  margin-bottom: 2px;
+  color: white;
+  text-shadow: 1px 0 10px rgba(0, 0, 0, 1);
+  font-family: 'Tektur', cursive;
+}
+label a {
+  text-shadow: none;
+}
+.modalbuttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 14px;
+  width: 200px;
+}
+.primary-buttons {
+  /* height: 24px; */
+  color: white;
+  background-color: black;
+  border: none;
+  padding: 4px 8px;
+  box-shadow: 2px 1px 0 rgba(255, 255, 255, 1);
+  font-family: 'Pathway Gothic One', sans-serif;
+  font-size: 20px;
+  position: relative;
+  translate: left .4s, top .4s;
+  width: 90px;
+}
+.primary-buttons:hover {
+  color: rgb(74, 252, 74);
+}
+.primary-buttons:active {
+  color: rgb(255, 255, 255);
+  left: 2px;
+  top: 1px;
+  box-shadow: none;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+.nav-left h2 {
+  color: white;
+  margin-left: 12px;
+  transition: color 0.5s;
+  font-family: 'Permanent Marker', cursive;
+  text-shadow: rgb(0, 0, 0) 4px 4px 10px;
+}
+.nav-left a {
+  text-decoration: none;
+}
+.nav-left h2:hover {
+  color: rgb(74, 252, 74);
+}
+
+.logo-container {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.logo {
+  width: 100%;
+  transform-origin: left center;
+  transform: scale(2) translateX(-44%) translateY(10%);
+  cursor: pointer;
+}
+
+.navbar {
+  display: flex;
+  position: fixed;
+  justify-content: space-between;
+  background-color: rgb(5, 36, 5);
+  padding: 12px;
+  border-bottom: 1px solid black;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+  align-items: center;
+  width: 100%;
+  height: 32px;
+  z-index: 99;
+}
+.links a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: white;
+  transition: color 0.5s;
+  width: 400px;
+  flex: 2;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 22px;
+}
+.links a:hover {
+  color: rgb(74, 252, 74);
+}
+
+.new-movie-button-container {
+  display: flex;
+  justify-content: end;
+  flex: 1;
+}
+.new {
+  margin-right: 24px;
+  cursor: pointer;
+}
+
+.top-splash {
+  display: flex;
+  width: 100%;
+  height: 300px;
+  top: 58px;
+  position: relative;
+  /* border-bottom: 1px solid black; */
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.7);
+}
+
+.pic {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+.splash-title {
+  position: absolute;
+  color: rgb(41, 179, 41);
+  z-index: 2;
+  font-size: 84px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-shadow: rgb(0, 0, 0) 12px 8px 10px;
+  /* backdrop-filter: blur(10px); */
+  font-family: 'Permanent Marker', cursive;
+  margin: 0;
+  max-width: 800px;
+  text-align: center;
+}
+
+.main {
+  position: relative;
+  top: 42px;
+  padding: 32px 100px;
+}
+
+.list {
+  position: absolute;
+  left: 33%;
+  /* transform: translate(-50%, -50%); */
+}
+
+.movie-element {
+  display: flex;
+  width: 800px;
+  height: 200px;
+  background-color: rgb(5, 36, 5);
+  box-shadow: -2px 2px 12px rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.movie-image-container {
+  height: 200px;
+  width: 133px;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  overflow: hidden;
+}
+.movie-pic {
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  object-fit: cover;
+}
+
+.movie-info-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-left: 36px;
+  position: relative;
+}
+
+.movie-title h2 {
+  margin: 0;
+  padding-top: 12px;
+  color: white;
+  /* text-shadow: 1px 1px 4px rgba(0, 0, 0, .7); */
+  text-decoration: underline;
+  font-family: 'EB Garamond', serif;
+  font-weight: 100;
+}
+
+.movie-rating-container p {
+  margin: 8px 0 24px 0;
+  color: white;
+  background-color: black;
+  max-width: 80px;
+  font-size: 24px;
+  text-align: center;
+  border-radius: 20px;
+  font-family: 'Acme', sans-serif;
+}
+
+.movie-note-container {
+  display: inline-block;
+  width: 600px;
+  height: 70px;
+}
+.movie-note {
+  position: relative;
+}
+.movie-note-textarea {
+  /* text area container */
+  display: none;
+  border-radius: 4px;
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.7);
+  position: absolute;
+  z-index: 10;
+  transition: display 0.5s;
+  height: 82px;
+}
+.movie-note-textarea.visible {
+  display: block;
+}
+.movie-note-class {
+  /* actual text area */
+  background-color: gray;
+  border-radius: 4px;
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.7);
+  padding: 8px;
+  width: 584px;
+  height: 60px;
+  font-family: 'Ubuntu', sans-serif;
+  color:rgb(29, 29, 29);
+  font-size: 16px;
+  /* font-weight: 600; */
+}
+.movie-note-class::placeholder {
+  color: darkslategray;
+  font-family: 'Ubuntu', sans-serif;
+}
+.movie-note p {
+  margin: 0;
+  width: 588px;
+  height: 65px;
+  font-style: italic;
+  border-radius: 4px;
+  border: solid 1px rgb(35, 49, 49);
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.7);
+  padding: 6px;
+  position: relative;
+  z-index: 1;
+  color: rgb(221, 221, 221);
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.movie-edit-button {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  bottom: 12px;
+  left: 606px;
+  cursor: pointer;
+}
+/* .movie-edit-button.two {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  bottom: 12px;
+  left: 606px;
+  cursor: pointer;
+} */
+.edit-button {
+  width: 100%;
+}

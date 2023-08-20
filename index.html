@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dcgreen Movies</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Yatra+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tektur&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
+    <script src="scripts.js" defer></script>
+  </head>
+  <body>
+    <div class="modalbackground"></div>
+    <div class="modalcontainer">
+      <div class="modal">
+        <label for="title">Movie Title :</label>
+        <input type="text" name="title" id="title" />
+        <label for="image-url"
+          >Image URL :
+          <a href="https://www.movieposterdb.com/" target="_blank"
+            >Movie Poster Database</a
+          ></label
+        >
+        <input type="text" name="image-url" id="image-url" />
+        <label for="title">Rating :</label>
+        <input
+          type="number"
+          step=".1"
+          min="0"
+          max="10"
+          name="rating"
+          id="rating"
+        />
+      </div>
+      <div class="modalbuttons">
+        <button class="add primary-buttons">Add Movie</button>
+        <button class="cancel primary-buttons">Cancel</button>
+      </div>
+    </div>
+
+    <div class="navbar">
+      <div class="nav-left">
+        <div class="logo-container">
+          <a href="index.html"
+            ><img src="images/dcg.png" class="logo" alt="home-logo"
+          /></a>
+        </div>
+        <a href="index.html"><h2>Dcgreen</h2></a>
+      </div>
+
+      <div class="links">
+        <a href="favorites.html" target="_blank">DCG Favorites</a>
+        <a href="tarantino.html" target="_blank">Tarantino Movies Ranked</a>
+        <a href="anime.html" target="_blank">Best Animes</a>
+      </div>
+      <div class="new-movie-button-container">
+        <button class="new primary-buttons">New Movie</button>
+      </div>
+    </div>
+
+    <div class="top-splash">
+      <img src="images/splashtwo.png" class="pic" alt="splash-art" />
+      <h1 class="splash-title">DCGREEN MOVIES</h1>
+    </div>
+
+    <div class="main">
+      <ul class="list">
+        <li class="movie-element" id="demo-element">
+          <div class="movie-image-container">
+            <img
+              src="https://ih1.redbubble.net/image.2828013071.6407/poster,504x498,f8f8f8-pad,600x600,f8f8f8.jpg"
+              alt="movie-pic"
+              class="movie-pic"
+            />
+          </div>
+
+          <div class="movie-info-container">
+            <div class="movie-title">
+              <h2>Click 'New Movie' to add movies here!</h2>
+            </div>
+
+            <div class="movie-rating-container">
+              <p>7/10</p>
+            </div>
+
+            <div class="movie-note-container">
+              <div class="movie-note">
+                <div class="movie-note-textarea">
+                  <textarea
+                    name="movie-note-area"
+                    class="movie-note-class"
+                    cols="77"
+                    rows="4"
+                    placeholder="Click the edit button when finished to save note."
+                  ></textarea>
+                </div>
+                <p class="movie-note-p">
+                  Click edit button to enter your notes here!
+                </p>
+              </div>
+
+              <div class="movie-edit-button">
+                <img src="images/edit.png" class="edit-button" />
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="foot"></div>
+  </body>
+</html>
