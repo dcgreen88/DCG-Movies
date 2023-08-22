@@ -1,84 +1,141 @@
 /* Global Variables */
+const demoElement = document.querySelector('#demo-element');
+
 const newMovieButton = document.querySelector('.new');
 const addMovieButton = document.querySelector('.add');
 const cancelButton = document.querySelector('.cancel');
-const editButton = document.querySelector('.movie-edit-button');
 
 const modalBackground = document.querySelector('.modalbackground');
-
-const modalTitle = document.querySelector('#title');
 const modalImageURL = document.querySelector('#image-url');
+const modalTitle = document.querySelector('#title');
 const modalRating = document.querySelector('#rating');
 
 const movieList = document.querySelector('.list');
 const demo = movieList.firstElementChild;
 
-const movieNotes = document.querySelector('.movie-note-textarea');
-const movieNoteTextArea = document.querySelector('.movie-note-class');
-const movieNoteP = document.querySelector('.movie-note-p');
+const movieNoteTextArea = document.querySelector('.input-movie-note');
+const movieNoteP = document.querySelector('.displayed-movie-note');
+
+const retrieveLocal = JSON.parse(localStorage.getItem('movies'));
 
 let movieArray = [];
-let notesArray = [];
 
 /* ~Model~ */
-const saveLocal = () => {
-  localStorage.setItem('movies', JSON.stringify(movieArray));
-};
-const retrieveLocal = JSON.parse(localStorage.getItem('movies'));
-//---------Storage---------------------------
-
 const pushMovie = () => {
+  const movieId = Math.floor(Math.random() * 10000);
   const movieTitle = modalTitle.value;
   const movieImage = modalImageURL.value;
   const movieRating = modalRating.value;
-  const movieNote = 'Click edit button to enter your notes here!';
+  const movieNote = 'Click edit-button to enter notes here!';
 
   movieArray.push({
+    id: movieId,
     title: movieTitle,
     image: movieImage,
     rating: movieRating,
-    note: movieNote
+    note: movieNote,
   });
-
-  saveLocal();
 };
-
 const appendMovie = (array) => {
-  movieList.innerHTML = '';
+  if (array[0]) {
+    movieList.innerHTML = '';
+  } else {
+    return;
+  }
 
   for (let i = 0; i < array.length; i++) {
-    const movieElement = document.createElement('li');
+    const movieElement = document.createElement('div');
     movieElement.className = 'movie-element';
-    movieElement.id = i;
+    movieElement.id = array[i].id;
     movieElement.innerHTML = `
+        <div class='delete-button-container'>
+            <img src='images/delete.png' class='delete-button' />
+            <h6 class="delete-cursor-note">Delete</h6>
+        </div>
+
         <div class='movie-image-container'>
             <img src='${array[i].image}' alt='movie-pic' class='movie-pic' />
         </div>
 
-        <div class='movie-info-container'>
-            <div class='movie-title'>
-                <h2>${array[i].title}</h2>
-            </div>
+      <div class='movie-info-container'>
+          <div class='movie-title'>
+            <h2>${array[i].title}</h2>
+          </div>
         
 
-            <div class='movie-rating-container'>
-                <p>${array[i].rating}/10</p>
-            </div>
+          <div class='movie-rating-container'>
+            <p>${array[i].rating}/10</p>
+          </div>
 
-            <div class='movie-note-container'>
-              <div class='movie-note'>
-                <div class="movie-note-textarea">
-                    <textarea name="movie-note-area" class="movie-note-class" cols="77" rows="4" placeholder="Click the edit button when finished to save note."></textarea>
-                </div>
-                <p class="movie-note-p">${array[i].note}</p>
-              </div>
-    
-              <div class='movie-edit-button'>
-                <img src='images/edit.png' class='edit-button' />
-              </div>                
+          <div class='movie-note-container'>
+            <div class='movie-notes'>
+              <textarea name="movie-note-area" class="input-movie-note" cols="77" rows="4" placeholder="Click the edit button when finished to save note."></textarea>
+              <p class="displayed-movie-note">${array[i].note}</p>
             </div>
-        </div>
+  
+            <div class='movie-edit-button'>
+              <img src='images/edit.png' class='edit-button' />
+              <h6 class="edit-cursor-note">Edit</h6>
+            </div>                
+          </div>
+      </div>
     `;
+
+    const deleteButtonEl = movieElement.querySelector(
+      '.delete-button-container'
+    );
+    const deleteButton = movieElement.querySelector('.delete-button');
+    const editButton = movieElement.querySelector('.edit-button');
+    const movieNoteTextArea = movieElement.querySelector('.input-movie-note');
+    const movieNoteP = movieElement.querySelector('.displayed-movie-note');
+
+    const editNote = () => {
+      movieNoteTextArea.classList.toggle('visible');
+      movieNoteP.classList.toggle('visible');
+      deleteButtonEl.classList.toggle('visible');
+    };
+    const enterNote = (id) => {
+      const note = movieNoteTextArea.value;
+      movieArray.find(movie => {
+        if (movie.id === id) {
+          movie.note = note;
+        }
+      });
+
+      saveLocal();
+      appendMovie(movieArray);
+
+      movieNoteTextArea.classList.toggle('visible');
+      movieNoteP.classList.toggle('visible');
+      deleteButtonEl.classList.toggle('visible');
+    };
+    const notes = (id) => {
+      if (movieNoteTextArea.classList.contains('visible')) {
+        enterNote(id);
+      } else {
+        editNote();
+        movieNoteTextArea.value = movieNoteP.innerText;
+      }
+    };
+
+    const deleteMovieFromArray = (array, id) => {
+      const newArray = array.filter((movie) => movie.id !== id); 
+      return newArray;
+    };
+    const deleteMovieFromInterface = (array, id) => {
+      movieArray = deleteMovieFromArray(array, id);
+      saveLocal();
+      appendMovie(movieArray);
+    };
+
+    deleteButton.addEventListener('click', (event) => {
+      const movieId = parseInt(event.target.closest('.movie-element').id);
+      deleteMovieFromInterface(movieArray, movieId);
+    });
+    editButton.addEventListener('click', (event) => {
+      const id = parseInt(event.target.closest('.movie-element').id);
+      notes(id);
+    });
 
     movieList.appendChild(movieElement);
   }
@@ -87,106 +144,48 @@ const appendMovie = (array) => {
 const clearModal = () => {
   modalTitle.value = '';
   modalImageURL.value = '';
-  modalRating.value = '';
+  modalRating.value = 5;
 };
-
-const editNote = () => {
-  movieNotes.classList.toggle('visible');
-};
-
-const enterNote = () => {
-  const note = movieNoteTextArea.value;
-
-  if (note !== '') {
-    movieNoteP.innerText = note;
-  } else {
-    movieNoteP.innerText = 'Click edit button to enter your notes here!';
-  }
-
-  movieNotes.classList.toggle('visible');
-};
-
-/* Visuals */
-if (retrieveLocal) {
-  movieArray = retrieveLocal;
-  appendMovie(movieArray);
-};
-
 const toggleModal = () => {
   const modalContainer = document.querySelector('.modalcontainer');
 
   modalBackground.classList.toggle('visible');
   modalContainer.classList.toggle('visible');
+
+  if (modalContainer.classList.contains('visible')) {
+    modalImageURL.focus();
+  }
 };
-
-const addMovieToList = () => {
-  pushMovie();
-
-  appendMovie(movieArray);
-
+const resetModal = () => {
   clearModal();
   toggleModal();
 };
 
-const notes = () => {
-  // console.log('hi');
-  if (movieNotes.classList.contains('visible')) {
-    enterNote();
+const saveLocal = () => {
+  localStorage.setItem('movies', JSON.stringify(movieArray));
+};
+
+const finishMovieAdd = () => {
+  if (modalImageURL.value && modalTitle.value && modalRating.value) {
+    pushMovie();
+    appendMovie(movieArray);
+    resetModal();
+    saveLocal();
   } else {
-    editNote();
+    return;
   }
 };
 
+/* Visuals */
+if (Array.isArray(retrieveLocal)) {
+  movieArray = retrieveLocal;
+  appendMovie(movieArray);
+}
+
 /* Controllers */
 newMovieButton.addEventListener('click', toggleModal);
-addMovieButton.addEventListener('click', addMovieToList);
 
+addMovieButton.addEventListener('click', finishMovieAdd);
 cancelButton.addEventListener('click', toggleModal);
 
-editButton.addEventListener('click', notes);
-
 // Rendering new elements is fucky and requires us to rescope global variables. Our global variables work on pre-rendered code, but once we render new elements via javascript, a new set of variables needs to be made for these post-rendered elements. Think of it kind of like the tentacles thing where our global variables grab the values that we have specified, but when we generate new elements we also have to generate new tentacles to go with them. The original tentacles do not simply replicate themselves.
-
-movieList.addEventListener('click', (event) => {
-  const demo = movieList.firstElementChild;
-  if (demo.id !== 'demo-element') {
-    const target = event.target;
-
-    if (target.classList.contains('edit-button')) {
-      const movieElement = target.closest('.movie-element'); // Get the closest parent li element
-      const id = movieElement.id;
-      const movieNote = movieElement.querySelector('.movie-note-textarea'); // Find the textarea-container within the li
-      const movieNoteP = movieElement.querySelector('.movie-note-p'); // Find the <p> of the li
-      const saveLocal = () => {
-        localStorage.setItem('movies', JSON.stringify(movieArray));
-      };
-      movieArray = JSON.parse(localStorage.getItem('movies'));
-
-      const editNote = () => {
-        movieNote.classList.toggle('visible');
-      };
-
-      const enterNote = () => {
-        const movieNoteTextArea = movieElement.querySelector('.movie-note-class'); // textarea element
-        const note = movieNoteTextArea.value; // textarea value
-
-        if (note !== '') {
-          movieArray[id].note = note;
-          movieNoteP.innerText = `${movieArray[id].note}`;
-          saveLocal();
-        };
-
-        movieNote.classList.toggle('visible');
-      };
-
-      const notes = () => {
-        if (movieNote.classList.contains('visible')) {
-          enterNote();
-        } else {
-          editNote();
-        }
-      };
-      notes();
-    }
-  }
-});
