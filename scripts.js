@@ -114,7 +114,9 @@ const appendMovie = (array) => {
         enterNote(id);
       } else {
         editNote();
-        movieNoteTextArea.value = movieNoteP.innerText;
+        if (movieNoteP.innerText !== 'Click edit-button to enter notes here!') {
+          movieNoteTextArea.value = movieNoteP.innerText;
+        };
       }
     };
 
