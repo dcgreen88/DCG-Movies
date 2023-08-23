@@ -43,7 +43,7 @@ const appendMovie = (array) => {
     return;
   }
 
-  for (let i = 0; i < array.length; i++) {
+  for (let i = array.length - 1; i >= 0; i--) {
     const movieElement = document.createElement('div');
     movieElement.className = 'movie-element';
     movieElement.id = array[i].id;
@@ -140,7 +140,12 @@ const appendMovie = (array) => {
     });
 
     movieList.appendChild(movieElement);
-  }
+    
+
+    setTimeout(() => {
+      movieElement.style.opacity = 1;
+    }, (array.length - 1 - i) * 350);
+  };
 };
 
 const clearModal = () => {
