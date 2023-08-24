@@ -568,6 +568,7 @@ label a:hover:active {
   color:rgb(29, 29, 29);
   font-size: 16px;
   z-index: 3;
+  overflow: hidden;
 }
 .displayed-movie-note.visible {
   display: none;
