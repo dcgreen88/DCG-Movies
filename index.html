@@ -84,10 +84,30 @@
         <a href="index.html"><h2>Dcgreen</h2></a>
       </div>
 
-      <div class="links">
-        <a href="#" target="_blank">DCG Favorites</a>
-        <a href="#" target="_blank">Tarantino Movies Ranked</a>
-        <a href="#" target="_blank">Best Animes</a>
+      <div class="search-filter">
+        <div class="search-container">
+          <input type="text" class="searchbar" placeholder="Search"/>
+          <div class="search-icon-container">
+            <img src="images/search.png" class="search-icon" />
+            <h6 class="search-cursor-note">Search</h6>
+          </div>
+        </div>
+        <div class="filter">
+          <div class="filter-icon-container">
+            <img src="images/filter.png" class="filter-icon" />
+            <h6 class="filter-cursor-note">Filter</h6>
+          </div>
+          <div class="menu-container">
+            <p>Alphabetical</p>
+            <div class="arrow-icon-container">
+              <img src="images/down-arrow.png" class="arrow-icon"/>
+            </div>
+            </div>
+            <div class="filter-menu">
+              <div class="menu-item">Alphabetical</div>
+              <div class="menu-item">Rating</div>
+            </div>
+        </div>
       </div>
 
       <div class="new-movie-button-container">
@@ -100,8 +120,8 @@
       <h1 class="splash-title">DCGREEN MOVIES</h1>
     </div>
 
-    <div class="list">
-      <div class="movie-element" id="demo-element">
+    <div class="demo-container">
+      <div class="movie-element demo-element visible" id="demo-element">
         <div class="delete-button-container visible">
           <img src="images/delete.png" class="delete-button" />
           <h6 class="delete-cursor-note">Delete</h6>
@@ -144,6 +164,10 @@
           </div>
         </div>
       </div>
+    </div>
+      
+
+    <div class="list">  
     </div>
   </body>
 </html>

@@ -79,7 +79,6 @@ label a:hover:active {
   width: 200px;
 }
 .primary-buttons {
-  /* height: 24px; */
   color: white;
   background-color: black;
   border: none;
@@ -88,7 +87,7 @@ label a:hover:active {
   font-family: 'Pathway Gothic One', sans-serif;
   font-size: 20px;
   position: relative;
-  /* transition: width .15s, top .15s; */
+  transition: left .2s, top .2s;
   width: 90px;
 }
 .primary-buttons:hover {
@@ -148,19 +147,171 @@ label a:hover:active {
   height: 32px;
   z-index: 99;
 }
-.links a {
-  margin: 0 10px;
-  text-decoration: none;
-  color: white;
-  transition: color 0.5s;
-  max-width: 400px;
+
+.search-filter {
+  display: flex;
   flex: 2;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 24px;
-  text-shadow: rgb(0, 0, 0) 2px 2px 4px, -2px -2px 4px black;
+  align-items: center;
+  justify-content: center;
 }
-.links a:hover {
-  color: rgb(182, 247, 122);
+
+.search-container {
+  display: flex;
+  align-items: center;
+  
+}
+.searchbar {
+  width: 450px;
+  height: 30px;
+  border-top-left-radius:  20px;
+  border-bottom-left-radius:  20px;
+  box-shadow: none;
+  border-top: solid 1px rgb(0, 0, 0);
+  border-bottom: solid 1px rgb(0, 0, 0);
+  border-left: solid 1px rgb(0, 0, 0);
+  background-color: rgb(182, 247, 122);
+  padding-left: 12px;
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.searchbar::placeholder {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 16px;
+  color: black;
+}
+.search-icon-container {
+  width: 64px;
+  height: 38px;
+  position: relative;
+  background-color: rgb(182, 247, 122);
+  border-top-right-radius:  18px;
+  border-bottom-right-radius:  18px;
+  top: -1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: solid 1px rgb(0, 0, 0);
+  border-bottom: solid 1px rgb(0, 0, 0);
+  border-right: solid 1px rgb(0, 0, 0);
+  cursor: pointer;
+}
+.search-icon {
+  width: 20px;
+  height: 20px;
+}
+.search-cursor-note {
+  position: absolute;
+  top: 20px;
+  left: 8px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  background-color: rgb(41, 41, 41);
+  border-radius: 5px;
+  padding: 4px 8px;
+  display: none;
+  transition: display .2s;
+}
+.search-icon:hover + .search-cursor-note {
+  display: block;
+}
+
+.filter {
+  display: flex;
+  position: relative;
+}
+.filter-icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 38px;
+  background-color: rgb(182, 247, 122);
+  border-radius: 20px;
+  top: 1px;
+  margin-left: 18px;
+  box-shadow: 0 0 2px black;
+  z-index: 11;
+  cursor: pointer;
+}
+.filter-icon {
+  width: 20px;
+  height: 20px;
+}
+.filter-cursor-note {
+  position: absolute;
+  top: 20px;
+  left: 19px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  background-color: rgb(41, 41, 41);
+  border-radius: 5px;
+  padding: 4px 8px;
+  display: none;
+  transition: display .2s;
+}
+.filter-icon:hover + .filter-cursor-note {
+  display: block;
+}
+
+.menu-container {
+  background-color: rgba(182, 247, 122, .9);
+  width: 140px;
+  height: 30px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 4px;
+  left: -12px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  z-index: 10;
+  box-shadow: 0 1px 1px black;
+  transition: max-width .5s;
+}
+.menu-container.visible {
+  max-width: 140px;
+  display: flex;
+}
+.menu-container p {
+  margin: 0;
+  padding: 0;
+}
+.arrow-icon-container {
+  width: 14px;
+  height: 14px;
+  position: relative;
+  left: 12px;
+  cursor: pointer;
+}
+.arrow-icon {
+  width: 100%;
+}
+.filter-menu {
+  display: none;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  top: 34px;
+  left: 54px;
+  width: 120px;
+  height: auto;
+  background-color: rgb(182, 247, 122);
+  z-index: 5;
+  border: solid 1px black;
+}
+.filter-menu.visible {
+  display: block;
+}
+.menu-item {
+  text-align: center;
+  list-style: none;
+  font-size: 14px;
+  margin-top: 0px;
+  z-index: 0;
+  border-bottom: solid 1px black;
+  padding: 10px 0px;
+  padding-right: 8px;
 }
 
 .new-movie-button-container {
@@ -204,6 +355,13 @@ label a:hover:active {
   text-align: center;
 }
 
+.demo-container {
+  position: relative;
+  display: flex;
+  top: 122px;
+  align-items: center;
+  flex-direction: column;
+}
 .list {
   position: relative;
   display: flex;
@@ -224,6 +382,17 @@ label a:hover:active {
   left: 6px;
   top: -12px;
 }
+.demo-element.visible {
+  height: 200px;
+  opacity: 0;
+  transition: opacity 1s;
+  overflow:visible;
+}
+.demo-element {
+  display: none;
+  height: 0;
+  overflow: hidden;
+}
 
 .movie-element {
   display: flex;
@@ -234,7 +403,16 @@ label a:hover:active {
   border-radius: 12px;
   margin-bottom: 32px;
   position: relative;
-  transition: display 1s;
+  opacity: 0;
+  transition: opacity .55s;
+}
+.demo-element.visible {
+  opacity: 1;
+}
+.demo-element.hidden {
+  display: none;
+  height: 0;
+  overflow: hidden;
 }
 
 .delete-button-container {
@@ -317,7 +495,6 @@ label a:hover:active {
   margin: 0;
   padding-top: 4px;
   color: white;
-  /* text-shadow: 1px 1px 4px rgba(0, 0, 0, .7); */
   text-decoration: underline;
   font-family: 'EB Garamond', serif;
   font-weight: 100;
@@ -356,7 +533,6 @@ label a:hover:active {
   left: 10px;
   background-color: rgb(154, 223, 194);
   border-radius: 8px;
-  /* box-shadow: 0px 0px 8px rgba(0, 0, 0, 1); */
   padding: 8px;
   width: auto;
   height: auto;

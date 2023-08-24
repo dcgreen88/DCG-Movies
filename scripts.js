@@ -21,6 +21,18 @@ const retrieveLocal = JSON.parse(localStorage.getItem('movies'));
 let movieArray = [];
 
 /* ~Model~ */
+const demoShow = () => {
+  demoElement.classList.remove('hidden');
+  demoElement.classList.add('visible');
+  setTimeout(() => {
+    demoElement.style.opacity = 1;
+  }, 1 * 1000);
+};
+const demoHide = () => {
+  demoElement.classList.remove('visible');
+  demoElement.classList.add('hidden');
+};
+
 const pushMovie = () => {
   const movieId = Math.floor(Math.random() * 10000);
   const movieTitle = modalTitle.value;
@@ -36,12 +48,14 @@ const pushMovie = () => {
     note: movieNote,
   });
 };
-const appendMovie = (array) => {
+const appendMovie = (array, applyFading = true) => {
   if (array[0]) {
-    movieList.innerHTML = '';
-  } else {
-    return;
+    demoHide();
+  } else if (array === []) {
+    demoShow();
   }
+
+  movieList.innerHTML = '';
 
   for (let i = array.length - 1; i >= 0; i--) {
     const movieElement = document.createElement('div');
@@ -96,14 +110,14 @@ const appendMovie = (array) => {
     };
     const enterNote = (id) => {
       const note = movieNoteTextArea.value;
-      movieArray.find(movie => {
+      movieArray.find((movie) => {
         if (movie.id === id) {
           movie.note = note;
         }
       });
 
       saveLocal();
-      appendMovie(movieArray);
+      appendMovie(movieArray, false);
 
       movieNoteTextArea.classList.toggle('visible');
       movieNoteP.classList.toggle('visible');
@@ -116,18 +130,30 @@ const appendMovie = (array) => {
         editNote();
         if (movieNoteP.innerText !== 'Click edit-button to enter notes here!') {
           movieNoteTextArea.value = movieNoteP.innerText;
-        };
+        }
       }
     };
 
     const deleteMovieFromArray = (array, id) => {
-      const newArray = array.filter((movie) => movie.id !== id); 
-      return newArray;
+      let newArray = array.filter((movie) => movie.id !== id);
+      if (newArray[0]) {
+        return newArray;
+      } else {
+        newArray = [];
+        return newArray;
+      }
     };
     const deleteMovieFromInterface = (array, id) => {
-      movieArray = deleteMovieFromArray(array, id);
-      saveLocal();
-      appendMovie(movieArray);
+      const deletedArray = deleteMovieFromArray(array, id);
+      if (deletedArray[0]) {
+        movieArray = deletedArray;
+        saveLocal();
+        appendMovie(movieArray);
+      } else {
+        resetLocal();
+        movieList.innerHTML = '';
+        demoShow();
+      };
     };
 
     deleteButton.addEventListener('click', (event) => {
@@ -140,12 +166,15 @@ const appendMovie = (array) => {
     });
 
     movieList.appendChild(movieElement);
-    
 
-    setTimeout(() => {
+    if (applyFading) {
+      setTimeout(() => {
+        movieElement.style.opacity = 1;
+      }, (array.length - 1 - i) * 550);
+    } else {
       movieElement.style.opacity = 1;
-    }, (array.length - 1 - i) * 350);
-  };
+    }
+  }
 };
 
 const clearModal = () => {
@@ -171,6 +200,10 @@ const resetModal = () => {
 const saveLocal = () => {
   localStorage.setItem('movies', JSON.stringify(movieArray));
 };
+const resetLocal = () => {
+  movieArray = [];
+  saveLocal();
+};
 
 const finishMovieAdd = () => {
   if (modalImageURL.value && modalTitle.value && modalRating.value) {
@@ -187,6 +220,8 @@ const finishMovieAdd = () => {
 if (Array.isArray(retrieveLocal)) {
   movieArray = retrieveLocal;
   appendMovie(movieArray);
+} else {
+  movieArray = [];
 }
 
 /* Controllers */
@@ -194,5 +229,3 @@ newMovieButton.addEventListener('click', toggleModal);
 
 addMovieButton.addEventListener('click', finishMovieAdd);
 cancelButton.addEventListener('click', toggleModal);
-
-// Rendering new elements is fucky and requires us to rescope global variables. Our global variables work on pre-rendered code, but once we render new elements via javascript, a new set of variables needs to be made for these post-rendered elements. Think of it kind of like the tentacles thing where our global variables grab the values that we have specified, but when we generate new elements we also have to generate new tentacles to go with them. The original tentacles do not simply replicate themselves.
