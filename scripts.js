@@ -42,7 +42,11 @@ const searchFunction = (searchValue) => {
     
     return title || note;
   });
-  // console.log(searchResult);
+  
+  if (filterMenu.classList.contains('visible')) {
+    filterMenu.classList.toggle('visible');
+  };
+  
   appendMovie(searchResult);
 };
 const clearSearchValue = () => {
