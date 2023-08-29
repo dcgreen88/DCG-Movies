@@ -189,6 +189,7 @@ label a:hover:active {
   padding: 0 2px;
   position: absolute;
   right: 66px;
+  top: 1px;
 }
 .search-clear-icon {
   cursor: pointer;
