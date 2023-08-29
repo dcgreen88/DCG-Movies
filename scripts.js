@@ -45,6 +45,7 @@ const searchFunction = (searchValue) => {
 
   if (filterMenu.classList.contains('visible')) {
     filterMenu.classList.toggle('visible');
+    filterDisplay.innerText = 'Filter Options';
   }
 
   appendMovie(searchResult);
