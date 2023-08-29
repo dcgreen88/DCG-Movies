@@ -75,7 +75,7 @@ const filterOptionAlphabetical = () => {
     return 0;
   });
 
-  appendMovie(alphabeticalMovies, false);
+  appendMovie(alphabeticalMovies);
   filterChoice.classList.toggle('visible');
 };
 const filterOptionRating = () => {
@@ -83,7 +83,7 @@ const filterOptionRating = () => {
 
   const numericalMovies = movieArray.sort((a, b) => a.rating - b.rating);
 
-  appendMovie(numericalMovies, false);
+  appendMovie(numericalMovies);
   filterChoice.classList.toggle('visible');
 };
 const filterOptionReset = () => {
