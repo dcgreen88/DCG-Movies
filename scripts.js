@@ -35,18 +35,18 @@ let movieArray = [];
 const searchFunction = (searchValue) => {
   const userInput = searchValue.toLowerCase();
 
-  const searchResult = movieArray.filter(movie => {
+  const searchResult = movieArray.filter((movie) => {
     const title = movie.title.toLowerCase().includes(userInput);
     const note = movie.note.toLowerCase().includes(userInput);
     console.log(title, note);
-    
+
     return title || note;
   });
-  
+
   if (filterMenu.classList.contains('visible')) {
     filterMenu.classList.toggle('visible');
-  };
-  
+  }
+
   appendMovie(searchResult);
 };
 const clearSearchValue = () => {
@@ -60,8 +60,7 @@ const filterArrow = () => {
   } else {
     filterMenu.classList.toggle('visible');
     filterChoice.classList.toggle('visible');
-  };
-
+  }
 };
 const filterOptionAlphabetical = () => {
   filterDisplay.innerText = 'Alphabetical';
@@ -69,7 +68,7 @@ const filterOptionAlphabetical = () => {
   const alphabeticalMovies = movieArray.sort((a, b) => {
     const titleA = a.title.toLowerCase();
     const titleB = b.title.toLowerCase();
-  
+
     if (titleA < titleB) {
       return 1;
     }
@@ -87,7 +86,7 @@ const filterOptionRating = () => {
 
   const numericalMovies = movieArray.sort((a, b) => a.rating - b.rating);
 
-  appendMovie(numericalMovies);
+  appendMovie(numericalMovies, false);
   filterChoice.classList.toggle('visible');
 };
 const filterOptionReset = () => {
@@ -128,7 +127,7 @@ const appendMovie = (array, applyFading = true) => {
     demoHide();
   } else if (array === []) {
     demoShow();
-  };
+  }
 
   movieList.innerHTML = '';
 
@@ -188,7 +187,7 @@ const appendMovie = (array, applyFading = true) => {
       movieArray.find((movie) => {
         if (movie.id === id) {
           movie.note = note;
-        };
+        }
       });
 
       saveLocal();
@@ -205,8 +204,8 @@ const appendMovie = (array, applyFading = true) => {
         editNote();
         if (movieNoteP.innerText !== 'Click edit-button to enter notes here!') {
           movieNoteTextArea.value = movieNoteP.innerText;
-        };
-      };
+        }
+      }
     };
 
     const deleteMovieFromArray = (array, id) => {
@@ -216,7 +215,7 @@ const appendMovie = (array, applyFading = true) => {
       } else {
         newArray = [];
         return newArray;
-      };
+      }
     };
     const deleteMovieFromInterface = (array, id) => {
       const deletedArray = deleteMovieFromArray(array, id);
@@ -228,7 +227,7 @@ const appendMovie = (array, applyFading = true) => {
         resetLocal();
         movieList.innerHTML = '';
         demoShow();
-      };
+      }
     };
 
     deleteButton.addEventListener('click', (event) => {
@@ -248,8 +247,8 @@ const appendMovie = (array, applyFading = true) => {
       }, (array.length - 1 - i) * 250);
     } else {
       movieElement.style.opacity = 1;
-    };
-  };
+    }
+  }
 };
 
 const clearModal = () => {
@@ -265,7 +264,7 @@ const toggleModal = () => {
 
   if (modalContainer.classList.contains('visible')) {
     modalImageURL.focus();
-  };
+  }
 };
 const resetModal = () => {
   clearModal();
@@ -288,7 +287,7 @@ const finishMovieAdd = () => {
     saveLocal();
   } else {
     return;
-  };
+  }
 };
 
 /* Visuals */
@@ -297,10 +296,15 @@ if (Array.isArray(retrieveLocal)) {
   appendMovie(movieArray);
 } else {
   movieArray = [];
-};
+}
 
 /* Controllers */
 clearSearch.addEventListener('click', clearSearchValue);
+searchbar.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    searchFunction(searchbar.value);
+  }
+});
 searchButton.addEventListener('click', () => {
   searchFunction(searchbar.value);
 });
