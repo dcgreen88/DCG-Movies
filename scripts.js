@@ -34,11 +34,11 @@ let movieArray = [];
 /* ~Model~ */
 const searchFunction = (searchValue) => {
   const userInput = searchValue.toLowerCase();
+  movieArray = retrieveLocal;
 
   const searchResult = movieArray.filter((movie) => {
     const title = movie.title.toLowerCase().includes(userInput);
     const note = movie.note.toLowerCase().includes(userInput);
-    console.log(title, note);
 
     return title || note;
   });
@@ -51,8 +51,7 @@ const searchFunction = (searchValue) => {
   appendMovie(searchResult);
 };
 const clearSearchValue = () => {
-  searchbar.value = '';
-  appendMovie(movieArray);
+  location.reload();
 };
 
 const filterArrow = () => {
