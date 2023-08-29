@@ -41,6 +41,7 @@
       href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap"
       rel="stylesheet"
     />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <script src="scripts.js" defer></script>
   </head>
   <body>
@@ -87,6 +88,10 @@
       <div class="search-filter">
         <div class="search-container">
           <input type="text" class="searchbar" placeholder="Search"/>
+          <div class="search-clear-container">
+            <img src="images/close.png" class="search-clear-icon"/>
+            <h6 class="search-clear-note">Clear Search</h6>
+          </div>
           <div class="search-icon-container">
             <img src="images/search.png" class="search-icon" />
             <h6 class="search-cursor-note">Search</h6>
@@ -95,17 +100,21 @@
         <div class="filter">
           <div class="filter-icon-container">
             <img src="images/filter.png" class="filter-icon" />
-            <h6 class="filter-cursor-note">Filter</h6>
+            <h6 class="filter-cursor-note">Filters</h6>
           </div>
           <div class="menu-container">
-            <p>Alphabetical</p>
-            <div class="arrow-icon-container">
-              <img src="images/down-arrow.png" class="arrow-icon"/>
-            </div>
+            <p class="filter-display">
+              Filter Options
+              <div class="arrow-icon-container">
+                <img src="images/down-arrow.png" class="arrow-icon"/>
+              </div>
+            </p>
+            
             </div>
             <div class="filter-menu">
-              <div class="menu-item">Alphabetical</div>
-              <div class="menu-item">Rating</div>
+              <div class="menu-item filter-alpha">Alphabetical</div>
+              <div class="menu-item filter-rating">Rating</div>
+              <div class="menu-item filter-reset">Reset List</div>
             </div>
         </div>
       </div>

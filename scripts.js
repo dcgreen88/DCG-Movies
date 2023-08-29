@@ -1,6 +1,17 @@
 /* Global Variables */
 const demoElement = document.querySelector('#demo-element');
 
+const searchbar = document.querySelector('.searchbar');
+const clearSearch = document.querySelector('.search-clear-icon');
+const searchButton = document.querySelector('.search-icon');
+const filterMenu = document.querySelector('.menu-container');
+const filterSelect = document.querySelector('.arrow-icon');
+const filterChoice = document.querySelector('.filter-menu');
+const filterDisplay = document.querySelector('.filter-display');
+const filterAlpha = document.querySelector('.filter-alpha');
+const filterRating = document.querySelector('.filter-rating');
+const filterReset = document.querySelector('.filter-reset');
+
 const newMovieButton = document.querySelector('.new');
 const addMovieButton = document.querySelector('.add');
 const cancelButton = document.querySelector('.cancel');
@@ -21,6 +32,66 @@ const retrieveLocal = JSON.parse(localStorage.getItem('movies'));
 let movieArray = [];
 
 /* ~Model~ */
+const searchFunction = (searchValue) => {
+  const userInput = searchValue.toLowerCase();
+
+  const searchResult = movieArray.filter(movie => {
+    const title = movie.title.toLowerCase().includes(userInput);
+    const note = movie.note.toLowerCase().includes(userInput);
+    console.log(title, note);
+    
+    return title || note;
+  });
+  // console.log(searchResult);
+  appendMovie(searchResult);
+};
+const clearSearchValue = () => {
+  searchbar.value = '';
+  appendMovie(movieArray);
+};
+
+const filterArrow = () => {
+  if (filterMenu.classList.contains('visible')) {
+    filterChoice.classList.toggle('visible');
+  } else {
+    filterMenu.classList.toggle('visible');
+    filterChoice.classList.toggle('visible');
+  };
+
+};
+const filterOptionAlphabetical = () => {
+  filterDisplay.innerText = 'Alphabetical';
+
+  const alphabeticalMovies = movieArray.sort((a, b) => {
+    const titleA = a.title.toLowerCase();
+    const titleB = b.title.toLowerCase();
+  
+    if (titleA < titleB) {
+      return 1;
+    }
+    if (titleA > titleB) {
+      return -1;
+    }
+    return 0;
+  });
+
+  appendMovie(alphabeticalMovies, false);
+  filterChoice.classList.toggle('visible');
+};
+const filterOptionRating = () => {
+  filterDisplay.innerText = 'Rating';
+
+  const numericalMovies = movieArray.sort((a, b) => a.rating - b.rating);
+
+  appendMovie(numericalMovies, false);
+  filterChoice.classList.toggle('visible');
+};
+const filterOptionReset = () => {
+  filterDisplay.innerText = 'Reset List';
+
+  location.reload();
+};
+
 const demoShow = () => {
   demoElement.classList.remove('hidden');
   demoElement.classList.add('visible');
@@ -53,7 +124,7 @@ const appendMovie = (array, applyFading = true) => {
     demoHide();
   } else if (array === []) {
     demoShow();
-  }
+  };
 
   movieList.innerHTML = '';
 
@@ -113,7 +184,7 @@ const appendMovie = (array, applyFading = true) => {
       movieArray.find((movie) => {
         if (movie.id === id) {
           movie.note = note;
-        }
+        };
       });
 
       saveLocal();
@@ -130,8 +201,8 @@ const appendMovie = (array, applyFading = true) => {
         editNote();
         if (movieNoteP.innerText !== 'Click edit-button to enter notes here!') {
           movieNoteTextArea.value = movieNoteP.innerText;
-        }
-      }
+        };
+      };
     };
 
     const deleteMovieFromArray = (array, id) => {
@@ -141,7 +212,7 @@ const appendMovie = (array, applyFading = true) => {
       } else {
         newArray = [];
         return newArray;
-      }
+      };
     };
     const deleteMovieFromInterface = (array, id) => {
       const deletedArray = deleteMovieFromArray(array, id);
@@ -170,11 +241,11 @@ const appendMovie = (array, applyFading = true) => {
     if (applyFading) {
       setTimeout(() => {
         movieElement.style.opacity = 1;
-      }, (array.length - 1 - i) * 550);
+      }, (array.length - 1 - i) * 250);
     } else {
       movieElement.style.opacity = 1;
-    }
-  }
+    };
+  };
 };
 
 const clearModal = () => {
@@ -190,7 +261,7 @@ const toggleModal = () => {
 
   if (modalContainer.classList.contains('visible')) {
     modalImageURL.focus();
-  }
+  };
 };
 const resetModal = () => {
   clearModal();
@@ -213,7 +284,7 @@ const finishMovieAdd = () => {
     saveLocal();
   } else {
     return;
-  }
+  };
 };
 
 /* Visuals */
@@ -222,9 +293,18 @@ if (Array.isArray(retrieveLocal)) {
   appendMovie(movieArray);
 } else {
   movieArray = [];
-}
+};
 
 /* Controllers */
+clearSearch.addEventListener('click', clearSearchValue);
+searchButton.addEventListener('click', () => {
+  searchFunction(searchbar.value);
+});
+filterSelect.addEventListener('click', filterArrow);
+filterAlpha.addEventListener('click', filterOptionAlphabetical);
+filterRating.addEventListener('click', filterOptionRating);
+filterReset.addEventListener('click', filterOptionReset);
+
 newMovieButton.addEventListener('click', toggleModal);
 
 addMovieButton.addEventListener('click', finishMovieAdd);
